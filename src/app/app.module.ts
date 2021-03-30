@@ -6,7 +6,7 @@ import { EntryComponent } from './entry/entry.component';
 import { ElevatorComponent } from './elevator/elevator.component';
 import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     RouterModule,
-    BrowserAnimationsModule,
+    // BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
