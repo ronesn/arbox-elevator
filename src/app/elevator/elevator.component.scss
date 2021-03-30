@@ -1,0 +1,97 @@
+.container{
+    padding: 10% 20% 5%;
+    background-color: #eeeeee;
+    justify-content: center;
+    height: 100%;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}
+
+.elevator {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    grid-gap: 2%;
+}
+
+.elevator-icon {
+    background-image: url('/assets/elevator-icon.svg');
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+}
+
+.floor {
+    height: 40px;
+    display: grid;
+    white-space: nowrap;
+    text-align: end;
+
+    .floor-index {
+        height: inherit;
+        line-height: 2.5;
+    }
+}
+
+.chart {
+    background-color: white;
+    display: grid;
+    .floor {
+        grid-template-columns: repeat(5, 1fr);
+    }
+}
+
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px #eeeeee solid;
+    transition-property: margin-top;
+    // transition-duration: 5s;
+}
+
+.item {
+    border: 1px solid black;
+    padding: 1px;
+    text-align: center;
+  }
+
+.buttons {
+    display: grid;
+    align-items: center;
+    color: white;
+}
+
+.btn{
+    height: 25px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.btn-call {
+    //background-color: $green;
+    background-color: green;
+}
+
+.btn-arrived {
+    color: green;
+    border: green 1px solid;
+    background-color: white;
+}
+
+.btn-waiting {
+    background-color: red;
+}
+
+.filter-green{
+    filter: invert(81%) sepia(15%) saturate(1328%) hue-rotate(87deg) brightness(87%) contrast(88%);
+}
+
+.filter-red{
+    filter: invert(37%) sepia(100%) saturate(3223%) hue-rotate(335deg) brightness(101%) contrast(84%);
+}
