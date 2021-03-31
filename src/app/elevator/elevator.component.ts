@@ -1,60 +1,73 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 @Component({
   selector: 'elevator',
   templateUrl: './elevator.component.html',
   styleUrls: ['./elevator.component.scss'],
 })
-export class ElevatorComponent implements OnInit {
+export class ElevatorComponent  {
 
   floorCount: number = 10;
   eleveatorCount: number = 5;
-  floorDuration: number = 500;
-  availableDelay = 2000;
+  floorDuration: number = 500; //time in ms between floors
+  availableDelay = 2000;      //time in ms waiting when elevator arrived
   elevators: Elevator[] = [];
   queueCalls: number[] = [];
   buttons: Button[] = [];
-  constructor() { }
+  
+  constructor() { //init elevators and buttons arrays
 
-  ngOnInit(): void {
     for (let index = 0; index < this.eleveatorCount; index++) {
       this.elevators.push(new Elevator(index));
     }
     for (let index = 0; index < this.floorCount; index++) {
       this.buttons.push(new Button);
     }
-    let cellHight = document.getElementsByClassName("chart").length;
   }
-
+  
+/**
+ * when button click call the closest elevator
+ * @param floor the floor number
+ */
   callElevator(floor: number) {
     
     this.buttons[this.floorCount - 1 - floor].setBusy();
 
     let closestElevator = this.getClosestElevator(floor);
-    if (closestElevator == -1) {
+    if (closestElevator == -1) { //all the elevators are busy -> add to queue
       this.queueCalls.push(floor);
     }
     else {
       this.sendElevator(closestElevator, floor);
     }
   }
-
+/**
+ * send elevtor to requested floor
+ * @param elevatorId 
+ * @param destination  requested floor
+ */
   sendElevator(elevatorId: number, destination: number) {
     let location = this.elevators[elevatorId].location;
-    let distance = Math.abs(destination - location);
+    let moveDuration = Math.abs(destination - location) * this.floorDuration;
     this.elevators[elevatorId].status = Status.Busy;
-
-    let elevatorElm = document.getElementById("elevator" + elevatorId)!;
+    
+    //move the elevator to destination
+    let elevatorElm = document.getElementById("elevator" + elevatorId)!; 
     elevatorElm.classList.add("filter-red");
     elevatorElm.style.transitionProperty = "margin-top"
-    elevatorElm.style.transitionDuration = distance * this.floorDuration + 'ms';
+    elevatorElm.style.transitionDuration = moveDuration + 'ms';
     elevatorElm.style.marginTop = "-" + destination * 80 + "px";
 
-    setTimeout(() => {
+    setTimeout(() => { //wait until the elevator arrived
       this.elevatorArrived(elevatorId, destination, elevatorElm);
-    }, distance * this.floorDuration);
+    }, moveDuration);
 
   }
-
+/**
+ * Change button and elevator to Arrived style and play arrived sound
+ * @param elevatorId 
+ * @param location 
+ * @param elevatorElm 
+ */
   elevatorArrived(elevatorId: number, location: number, elevatorElm: HTMLElement) {
     this.buttons[this.floorCount - 1 - location].setArrived();
     this.elevators[elevatorId].location = location;
@@ -71,23 +84,35 @@ export class ElevatorComponent implements OnInit {
     }, this.availableDelay);
 
   }
+  /**
+   * Change button and elevator to Available style
+   * @param elevatorId 
+   * @param location 
+   * @param elevatorElm 
+   */
   elevatorAvailable(elevatorId: number, location: number, elevatorElm: HTMLElement) {
     elevatorElm.classList.remove("filter-green");
     this.elevators[elevatorId].status = Status.Available;
     this.buttons[this.floorCount - 1 - location].setAvailable();
   }
-
+/**
+ * play bell-ringing
+ */
   beep() {
-    var beepsound = new Audio('/assets/bell-ringing-05.wav');
+    let beepsound = new Audio('/assets/bell-ringing-05.wav');
     beepsound.play();
   }
-
+/**
+ *  get closest available elevator
+ * @param destination 
+ * @returns elevator Id or -1 if all elevators are busy
+ */
   getClosestElevator(destination: number): number {
     let closestElevator = -1;
     let minDistance = -1;
 
     this.elevators.forEach(elevator => {
-      if (elevator.status != Status.Available) {
+      if (elevator.status != Status.Available) { 
         return;
       }
       let distance = Math.abs(destination - elevator.location);
@@ -98,16 +123,6 @@ export class ElevatorComponent implements OnInit {
     });
     return closestElevator;
   }
-
-
-  sleep(milliseconds: number) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-      currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-  }
-
 }
 
 export class Elevator {
