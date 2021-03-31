@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Button } from './Button';
+import { Elevator } from './Elevator';
+import { Status } from './Status';
 @Component({
   selector: 'elevator',
   templateUrl: './elevator.component.html',
@@ -122,39 +125,5 @@ export class ElevatorComponent  {
       }
     });
     return closestElevator;
-  }
-}
-
-export class Elevator {
-  id: number;
-  location = 0;
-  status = Status.Available;
-  destination = 0;
-  constructor(id: number) {
-    this.id = id;
-  }
-}
-
-export enum Status {
-  Available,
-  Busy,
-  Arrived
-}
-
-export class Button {
-  text = "Call";
-  status = Status.Available;
-  setBusy() {
-    this.status = Status.Busy;
-    this.text = "Waiting";
-  }
-  setArrived() {
-    this.status = Status.Arrived;
-    this.text = "Arrived";
-  }
-  setAvailable()
-  {
-    this.status = Status.Available;
-    this.text = "Call";
   }
 }
