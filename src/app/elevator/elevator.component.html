@@ -10,16 +10,15 @@
         <div class="chart">
             <div class="floor" *ngFor="let item of [].constructor(floorCount); let j = index">
                 <span class="cell" *ngFor="let item of [].constructor(eleveatorCount); let i = index">
-                    <span *ngIf = "j!= floorCount - 1"></span>
-                    <span *ngIf = "j == floorCount - 1" class="elevator-icon" id="elevator{{i}}"></span>
+                    <span *ngIf="j != floorCount - 1"></span>
+                    <span *ngIf="j == floorCount - 1" class="elevator-icon" id="elevator{{i}}"></span>
                 </span>
             </div>
         </div>
         <div class="buttons">
-            <div (click)="callElevator(floorCount-1-i)" class="btn" 
-            [ngClass]="{'btn-call': button.status == 0, 'btn-waiting':button.status == 1, 'btn-arrived':button.status == 2 }"
-            id="button{{floorCount-1-i}}"
-                *ngFor="let button of buttons; let i = index  ">
+            <div (click)="callElevator(floorCount-1-i)" class="btn"
+                [ngClass]="{'btn-call': button.status == 0, 'btn-waiting':button.status == 1, 'btn-arrived':button.status == 2 }"
+                id="button{{floorCount-1-i}}" *ngFor="let button of buttons; let i = index  ">
                 {{button.text}}
             </div>
         </div>
