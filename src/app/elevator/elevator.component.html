@@ -2,9 +2,9 @@
     <h1>Elevator Execrise</h1>
     <div class="elevator">
         <div class="floor">
-            <div class="floor-index" *ngFor="let item of [].constructor(floorCount) ; let i = index">
-                {{floorCount - i > 2 ? floorCount-1-i+'th' :
-                (floorCount-i == 1 ? 'Ground Floor' : (floorCount-i == 2 ? floorCount-1-i+'st' : floorCount-1+'rd'))}}
+            <div class="floor-index" *ngFor="let floor of reversedFloor">
+                {{floor > 2 ? floor+'th' :
+                (floor == 0 ? 'Ground Floor' : (floor == 1 ? '1st' : '2rd'))}}
             </div>
         </div>
         <div class="chart">
@@ -16,11 +16,12 @@
             </div>
         </div>
         <div class="buttons">
-            <div (click)="callElevator(floorCount-1-i)" class="btn"
-                [ngClass]="{'btn-call': button.status == 0, 'btn-waiting':button.status == 1, 'btn-arrived':button.status == 2 }"
-                id="button{{floorCount-1-i}}" *ngFor="let button of buttons; let i = index  ">
-                {{button.text}}
+            <div (click)="callElevator(floor)" class="btn"
+                [ngClass]="{'btn-call': buttons[floor].status == 0, 'btn-waiting':buttons[floor].status == 1, 'btn-arrived':buttons[floor].status == 2 }"
+                id="button{{floor}}" *ngFor="let floor of reversedFloor">
+                {{buttons[floor].text}}
             </div>
         </div>
+
     </div>
 </div>

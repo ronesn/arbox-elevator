@@ -16,6 +16,7 @@ export class ElevatorComponent  {
   elevators: Elevator[] = [];
   queueCalls: number[] = [];
   buttons: Button[] = [];
+  reversedFloor: number[] =[];
   
   constructor() { //init elevators and buttons arrays
 
@@ -24,6 +25,7 @@ export class ElevatorComponent  {
     }
     for (let index = 0; index < this.floorCount; index++) {
       this.buttons.push(new Button);
+      this.reversedFloor.push(this.floorCount - index -1);
     }
   }
   
@@ -33,7 +35,7 @@ export class ElevatorComponent  {
  */
   callElevator(floor: number) {
     
-    this.buttons[this.floorCount - 1 - floor].setBusy();
+    this.buttons[floor].setBusy();
 
     let closestElevator = this.getClosestElevator(floor);
     if (closestElevator == -1) { //all the elevators are busy -> add to queue
@@ -72,14 +74,14 @@ export class ElevatorComponent  {
  * @param elevatorElm 
  */
   elevatorArrived(elevatorId: number, location: number, elevatorElm: HTMLElement) {
-    this.buttons[this.floorCount - 1 - location].setArrived();
+    this.buttons[ location].setArrived();
     this.elevators[elevatorId].location = location;
     elevatorElm.classList.replace("filter-red", "filter-green");
     this.beep();
 
     setTimeout(() => {
       if (this.queueCalls.length > 0) {
-        this.buttons[this.floorCount - 1 - location].setAvailable();
+        this.buttons[ location].setAvailable();
         this.sendElevator(elevatorId, this.queueCalls.shift()!);
       } else {
         this.elevatorAvailable(elevatorId, location, elevatorElm);
@@ -96,7 +98,7 @@ export class ElevatorComponent  {
   elevatorAvailable(elevatorId: number, location: number, elevatorElm: HTMLElement) {
     elevatorElm.classList.remove("filter-green");
     this.elevators[elevatorId].status = Status.Available;
-    this.buttons[this.floorCount - 1 - location].setAvailable();
+    this.buttons[ location].setAvailable();
   }
 /**
  * play bell-ringing
