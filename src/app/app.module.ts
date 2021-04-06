@@ -20,7 +20,7 @@ import { BrowserModule } from '@angular/platform-browser';
     RouterModule,
     // BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [EntryComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

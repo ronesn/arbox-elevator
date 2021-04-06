@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
+import { EntryComponent } from '../entry/entry.component';
 import { Button } from './Button';
 import { Elevator } from './Elevator';
 import { Status } from './Status';
+ 
 @Component({
   selector: 'elevator',
   templateUrl: './elevator.component.html',
@@ -9,8 +11,8 @@ import { Status } from './Status';
 })
 export class ElevatorComponent  {
 
-  floorCount: number = 10;
-  eleveatorCount: number = 5;
+  floorCount: number ;// = EntryComponent.floorCount;
+  eleveatorCount: number ;
   floorDuration: number = 500; //time in ms between floors
   availableDelay = 2000;      //time in ms waiting when elevator arrived
   elevators: Elevator[] = [];
@@ -18,8 +20,9 @@ export class ElevatorComponent  {
   buttons: Button[] = [];
   reversedFloor: number[] =[];
   
-  constructor() { //init elevators and buttons arrays
-
+  constructor( entry:EntryComponent) { //init elevators and buttons arrays
+    this.floorCount = entry.floorCount;
+    this.eleveatorCount = entry.eleveatorCount;
     for (let index = 0; index < this.eleveatorCount; index++) {
       this.elevators.push(new Elevator(index));
     }
