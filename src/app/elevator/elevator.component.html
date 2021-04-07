@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="chart">
-            <div class="floor" *ngFor="let item of [].constructor(floorCount); let j = index">
+            <div class="floor" [ngStyle]="floorStyle" *ngFor="let item of [].constructor(floorCount); let j = index">
                 <span class="cell" *ngFor="let item of [].constructor(eleveatorCount); let i = index">
                     <span *ngIf="j != floorCount - 1"></span>
                     <span *ngIf="j == floorCount - 1" class="elevator-icon" id="elevator{{i}}"></span>

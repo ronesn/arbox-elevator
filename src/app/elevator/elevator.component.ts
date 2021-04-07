@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { LiteralExpr } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
 import { EntryComponent } from '../entry/entry.component';
 import { Button } from './Button';
 import { Elevator } from './Elevator';
@@ -9,7 +10,7 @@ import { Status } from './Status';
   templateUrl: './elevator.component.html',
   styleUrls: ['./elevator.component.scss'],
 })
-export class ElevatorComponent  {
+export class ElevatorComponent  implements OnInit{
 
   floorCount: number ;// = EntryComponent.floorCount;
   eleveatorCount: number ;
@@ -20,6 +21,8 @@ export class ElevatorComponent  {
   buttons: Button[] = [];
   reversedFloor: number[] =[];
   
+  floorStyle: { 'grid-template-columns': string; };
+
   constructor( entry:EntryComponent) { //init elevators and buttons arrays
     this.floorCount = entry.floorCount;
     this.eleveatorCount = entry.eleveatorCount;
@@ -30,6 +33,15 @@ export class ElevatorComponent  {
       this.buttons.push(new Button);
       this.reversedFloor.push(this.floorCount - index -1);
     }
+
+    this.floorStyle = {
+      'grid-template-columns': 'repeat('+this.eleveatorCount+', 1fr)'
+   }
+    
+  }
+  ngOnInit(): void {
+    //let elevatorElm = document.getElementsByClassName('floor').style
+    //throw new Error('Method not implemented.');
   }
   
 /**

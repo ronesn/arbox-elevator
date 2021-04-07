@@ -40,9 +40,6 @@ h1 {
 .chart {
     background-color: white;
     display: grid;
-    .floor {
-        grid-template-columns: repeat(5, 1fr);
-    }
 }
 
 .cell {
